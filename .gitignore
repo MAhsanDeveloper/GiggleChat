@@ -1,7 +1,18 @@
-# .gitignore
-
+# Node modules
 node_modules/
+frontend/node_modules/
+
+# Environment variables
 .env
-dist/
+
+# Build outputs
+frontend/dist/
 build/
+dist/
+
+# Logs
 *.log
+
+# System files
+.DS_Store
+Thumbs.db
