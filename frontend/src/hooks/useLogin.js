@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuthContext } from '../context/AuthContext'
 import toast from 'react-hot-toast'
+import useConversation from '../zustand/useConversation'
 
 const useLogin = () => {
     const [loading, setLoading] = useState(false)
@@ -23,6 +24,11 @@ const useLogin = () => {
             //localStorage
             localStorage.setItem('chat-user', JSON.stringify(data))
             setAuthUser(data)
+
+              // Clear selected conversation after signup
+            localStorage.removeItem("selectedConversation");
+            useConversation.getState().setSelectedConversation(null);
+
         }catch(error){
             toast.error(error.message)
         }finally{

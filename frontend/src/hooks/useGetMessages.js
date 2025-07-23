@@ -37,7 +37,7 @@ const useGetMessages = () => {
             `messages_${selectedConversation._id}`,
             JSON.stringify(data)
           );
-          console.log("Fetched messages from API:", data);
+          
         } else {
           setMessages([]);
         }

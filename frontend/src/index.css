@@ -2,12 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("/bg-img.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-attachment: fixed;
+}
+
+/* Avoid input zoom + keep white caret on dark themes */
+@layer base {
+  input,
+  textarea {
+    font-size: 16px;
+    caret-color: white;
+  }
 }
 
 /* Custom Scrollbar for Glassmorphism Effect */

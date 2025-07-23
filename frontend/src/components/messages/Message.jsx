@@ -34,12 +34,12 @@ const Message = ({ message }) => {
   <>
     {Array.isArray(message.readBy) &&
     message.readBy.map(String).includes(selectedConversation._id.toString()) ? (
-      <span className="text-blue-500 tracking-tighter">✔✔</span> // blue tick
+      <span className="text-blue-500 tracking-tighter">✔✔</span>
     ) : Array.isArray(message.deliveredTo) &&
       message.deliveredTo.map(String).includes(selectedConversation._id.toString()) ? (
-      <span className="text-gray- tracking-tighter">✔✔</span> // double gray tick
+      <span className="text-gray-500 tracking-tighter">✔✔</span>
     ) : (
-      <span>✔</span> // single tick
+      <span>✔</span>
     )}
   </>
 )}
