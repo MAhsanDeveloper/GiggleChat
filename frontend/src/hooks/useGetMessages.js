@@ -1,18 +1,27 @@
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import useConversation from '../zustand/useConversation';
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import useConversation from "../zustand/useConversation";
 
 const useGetMessages = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessages, selectedConversation } = useConversation();
 
   useEffect(() => {
-    if (!selectedConversation?._id) return; // Use consistent `_id`
+    if (!selectedConversation?._id) return;
 
-    // ✅ Load messages from localStorage first
-    const storedMessages = JSON.parse(localStorage.getItem(`messages_${selectedConversation._id}`));
-    if (storedMessages) {
+    // Always parse and check if it's an array
+    let storedMessages;
+    try {
+      storedMessages = JSON.parse(
+        localStorage.getItem(`messages_${selectedConversation._id}`)
+      );
+    } catch {
+      storedMessages = [];
+    }
+    if (Array.isArray(storedMessages)) {
       setMessages(storedMessages);
+    } else {
+      setMessages([]);
     }
 
     const getMessages = async () => {
@@ -22,16 +31,19 @@ const useGetMessages = () => {
         const data = await res.json();
         if (data.error) throw new Error(data.error);
 
-        // ✅ Only update localStorage if new data exists
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data)) {
           setMessages(data);
-          localStorage.setItem(`messages_${selectedConversation._id}`, JSON.stringify(data));
+          localStorage.setItem(
+            `messages_${selectedConversation._id}`,
+            JSON.stringify(data)
+          );
+          console.log("Fetched messages from API:", data);
         } else {
-          setMessages([]); // Reset messages if response is not an array or empty
+          setMessages([]);
         }
       } catch (error) {
         toast.error(error.message);
-        setMessages([]); // Reset messages in case of error
+        setMessages([]);
       } finally {
         setLoading(false);
       }
@@ -40,7 +52,7 @@ const useGetMessages = () => {
     getMessages();
   }, [selectedConversation?._id, setMessages]);
 
-  return { messages, loading };
+  return { messages: Array.isArray(messages) ? messages : [], loading };
 };
 
 export default useGetMessages;

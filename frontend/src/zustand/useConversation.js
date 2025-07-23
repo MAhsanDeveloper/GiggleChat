@@ -1,9 +1,22 @@
-import { create } from 'zustand';
+import { create } from "zustand";
+
+const initialConversation =
+  JSON.parse(localStorage.getItem("selectedConversation")) || null;
 
 const useConversation = create((set) => ({
-  selectedConversation: null,
-  setSelectedConversation: (selectedConversation) => set({ selectedConversation }),
-  messages: [], // Default empty array
+  selectedConversation: initialConversation,
+  setSelectedConversation: (selectedConversation) => {
+    if (selectedConversation) {
+      localStorage.setItem(
+        "selectedConversation",
+        JSON.stringify(selectedConversation)
+      );
+    } else {
+      localStorage.removeItem("selectedConversation");
+    }
+    set({ selectedConversation });
+  },
+  messages: [],
   setMessages: (messages) => set({ messages }),
 }));
 

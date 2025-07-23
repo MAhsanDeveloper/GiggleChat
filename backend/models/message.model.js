@@ -12,10 +12,17 @@ const messageSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    readBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    deliveredTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     message: {
       type: String,
       required: true,
-    }
+    },
   },
   { timestamps: true }
 );

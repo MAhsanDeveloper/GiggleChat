@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 
 import { createContext, useState, useEffect, useContext } from "react";
@@ -18,7 +18,7 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://foolish-ailis-gigglechatmafyr-b522f9e2.koyeb.app/", {
+      const socket = io("http://localhost:5000", {
         query: {
           userId: authUser._id,
         },

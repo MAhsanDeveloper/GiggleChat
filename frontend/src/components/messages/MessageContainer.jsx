@@ -8,47 +8,58 @@ const MessageContainer = ({ isMobile }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
   return (
-    <div className="flex flex-col h-screen w-full bg-gray-900 bg-opacity-10 backdrop-blur-lg text-white">
+    <div className="flex flex-col h-screen w-full bg-gradient-to-br from-gray-900/80 to-blue-900/60 backdrop-blur-lg text-white relative">
       {!selectedConversation ? (
         <NoChatSelected />
       ) : (
         <>
           {/* Mobile back button */}
-      {isMobile && (
-  <button
-    onClick={() => setSelectedConversation(null)}
-    className="md:hidden absolute top-2 left-2 z-10 flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-3 py-1 rounded-full shadow-md transition"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      strokeWidth={2}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15 19l-7-7 7-7"
-      />
-    </svg>
-    <span className="text-sm">Back</span>
-  </button>
-)}
-
+          {isMobile && (
+            <button
+              onClick={() => setSelectedConversation(null)}
+              className="md:hidden absolute top-4 left-4 z-10 flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-full shadow-lg transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <span className="text-sm">Back</span>
+            </button>
+          )}
 
           {/* Header */}
-          <div className="bg-slate-500 px-4 py-2">
-            <span className="label-text">To:</span>{" "}
-            <span className="text-gray-900 font-bold">
-              {selectedConversation.fullName}
-            </span>
+          <div className="flex items-center gap-3 bg-slate-800/90 px-6 py-3 border-b border-slate-700 shadow-sm sticky top-0 z-10">
+            <img
+              src={selectedConversation.profilePic}
+              alt={selectedConversation.fullName}
+              className="w-10 h-10 rounded-full border-2 border-blue-400 shadow"
+            />
+            <div>
+              <div className="font-semibold text-lg text-white">
+                {selectedConversation.fullName}
+              </div>
+              <div className="text-xs text-gray-300">
+                {selectedConversation.username}
+              </div>
+            </div>
           </div>
 
-          <div className="flex flex-col flex-1 overflow-hidden">
+          {/* Messages and Input */}
+          <div className="flex flex-col flex-1 overflow-hidden bg-gradient-to-t from-slate-900/60 to-transparent">
             <Messages />
-            <MessageInput />
+            <div className="bg-slate-800/80 p-3 border-t border-slate-700">
+              <MessageInput />
+            </div>
           </div>
         </>
       )}
