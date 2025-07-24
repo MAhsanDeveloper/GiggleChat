@@ -1,8 +1,10 @@
+import React from "react";
 import useConversation from "../../zustand/useConversation";
-import MessageInput from "./MessageInput";
-import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import { useAuthContext } from "../../context/AuthContext";
+
+const Messages = React.lazy(() => import("./Messages"));
+const MessageInput = React.lazy(() => import("./MessageInput"));
 
 const MessageContainer = ({ isMobile }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
@@ -62,15 +64,28 @@ const MessageContainer = ({ isMobile }) => {
           </div>
 
           <div className="flex flex-col flex-1 min-h-0 bg-gradient-to-t from-slate-900/60 to-transparent overflow-hidden">
+            <React.Suspense
+              fallback={
+                <div className="text-center p-4">Loading messages...</div>
+              }
+            >
             <div className="flex-1 overflow-auto px-1 pb-2 custom-scrollbar">
               <Messages />
             </div>
-            <div
-              className="bg-slate-800/90 p-2 pt-3 border-t border-slate-700 mb-2"
-              style={{ paddingBottom: "env(safe-area-inset-bottom, 1.5rem)" }}
+            </React.Suspense>
+
+            <React.Suspense
+              fallback={
+                <div className="text-center p-4"></div>
+              }
             >
-              <MessageInput />
-            </div>
+              <div
+                className="bg-slate-800/90 p-2 pt-3 border-t border-slate-700 mb-2"
+                style={{ paddingBottom: "env(safe-area-inset-bottom, 1.5rem)" }}
+              >
+                <MessageInput />
+              </div>
+            </React.Suspense>
           </div>
         </>
       )}

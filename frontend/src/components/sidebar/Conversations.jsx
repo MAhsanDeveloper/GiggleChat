@@ -1,10 +1,13 @@
+import React, { Suspense } from "react";
 import useGetConversations from "../../hooks/useGetConversations";
 import { getRandomEmoji } from "../../utils/emojis";
-import Conversation from "./Conversation";
+
+const Conversation = React.lazy(() => import("./Conversation"));
 
 const Conversations = () => {
 	const { loading, conversations } = useGetConversations();
 	return (
+		<Suspense fallback={<span className='loading loading-spinner mx-auto'></span>}>
 		<div className='py-2 flex flex-col overflow-auto'>
 			{conversations.map((conversation, idx) => (
 				<Conversation
@@ -17,6 +20,7 @@ const Conversations = () => {
 
 			{loading ? <span className='loading loading-spinner mx-auto'></span> : null}
 		</div>
+		</Suspense>
 	);
 };
 export default Conversations;

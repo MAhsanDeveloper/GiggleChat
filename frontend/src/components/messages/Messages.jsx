@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, Suspense } from "react";
 import useGetMessages from "../../hooks/useGetMessages";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
-import Message from "./Message";
 import useListenMessages from "../../hooks/useListenMessages";
+
+const Message = React.lazy(() => import("./Message"));
 
 const Messages = () => {
   const { messages = [], loading } = useGetMessages();
@@ -39,15 +40,16 @@ const Messages = () => {
 
   return (
     <div ref={messagesWrapperRef} className="px-4 flex-1 overflow-auto">
-      {!loading &&
-        messages.length > 0 &&
-        messages.map((message) => (
-          <div key={message._id}>
-            <Message message={message} />
-          </div>
-        ))}
+      {!loading ? (
+  <Suspense fallback={null}>
+    {messages.map((message) => (
+      <Message key={message._id} message={message} />
+    ))}
+  </Suspense>
+) : (
+  [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)
+)}
 
-      {loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
 
       {!loading && messages.length === 0 && (
         <p className="text-center">Send a message to start the conversation</p>
