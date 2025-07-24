@@ -12,31 +12,29 @@ const Messages = () => {
   const messagesWrapperRef = useRef(null);
 
   useEffect(() => {
-    const scrollToBottom = () => {
-      lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
+  const scrollToBottom = () => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
-    scrollToBottom();
+  scrollToBottom();
 
-    const input = document.getElementById("chat-input");
+  const input = document.getElementById("chat-input");
 
-    const handleFocus = () => {
-      // Wait a bit to ensure keyboard is up
-      setTimeout(() => {
-        scrollToBottom();
+  const handleFocus = () => {
+    setTimeout(() => {
+      scrollToBottom();
+    }, 300);
+  };
 
-        // Scroll container to bottom if height is reduced
-        messagesWrapperRef.current?.scrollTo({
-          top: messagesWrapperRef.current.scrollHeight,
-          behavior: "smooth",
-        });
-      }, 300);
-    };
-    input?.addEventListener("focus", handleFocus);
-    return () => {
-      input?.removeEventListener("focus", handleFocus);
-    };
-  }, [messages]);
+  input?.addEventListener("focus", handleFocus);
+
+  return () => {
+    input?.removeEventListener("focus", handleFocus);
+  };
+}, [messages]);
+
 
   return (
     <div ref={messagesWrapperRef} className="px-4 flex-1 overflow-auto">

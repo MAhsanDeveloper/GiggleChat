@@ -19,7 +19,7 @@ const MessageInput = () => {
         <input
           id="chat-input"
           type="text"
-          className="border text-sm rounded-lg block w-full p-3 outline-none text-black"
+          className="border text-sm rounded-lg block w-full p-3 outline-none text-black caret-black bg-white placeholder-gray-500"
           placeholder="Send a message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}

@@ -9,6 +9,10 @@ const MessageInput = React.lazy(() => import("./MessageInput"));
 const MessageContainer = ({ isMobile }) => {
   const { selectedConversation, setSelectedConversation } = useConversation();
 
+  if (!selectedConversation) {
+  return <NoChatSelected />;
+}
+
   return (
     <div className="flex flex-col h-screen w-full min-h-0 bg-gradient-to-br from-gray-900/80 to-blue-900/60 backdrop-blur-lg text-white relative">
       {!selectedConversation ? (
@@ -81,7 +85,6 @@ const MessageContainer = ({ isMobile }) => {
             >
               <div
                 className="bg-slate-800/90 p-2 pt-3 border-t border-slate-700 mb-2"
-                style={{ paddingBottom: "env(safe-area-inset-bottom, 1.5rem)" }}
               >
                 <MessageInput />
               </div>
