@@ -8,7 +8,7 @@ const Sidebar = () => {
   return (
     <aside className="flex flex-col h-screen w-full bg-gradient-to-b from-gray-900/90 to-blue-900/70 backdrop-blur-lg border-r border-slate-700 shadow-lg">
       {/* Search */}
-      <Suspense fallback={<div className="p-4">Loading...</div>}>
+      <Suspense fallback={<div className="p-4"></div>}>
         <div className="p-4 pb-2">
           <SearchInput />
         </div>
@@ -23,7 +23,7 @@ const Sidebar = () => {
       </Suspense>
 
       {/* Sticky Logout for desktop, floating for mobile */}
-      <Suspense fallback={<div className="p-4">Loading...</div>}>
+      <Suspense fallback={<div className="p-4"></div>}>
         <div className="relative z-30">
           <div
             className="

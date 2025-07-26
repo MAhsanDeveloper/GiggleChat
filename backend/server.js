@@ -30,6 +30,14 @@ app.use("/api/users", userRoutes);
 
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
+// Prevent serving index.html on missing .js, .css, etc.
+app.use((req, res, next) => {
+  if (req.path.match(/\.[^\/]+$/)) {
+    return res.status(404).send("Not Found");
+  }
+  next();
+});
+
 app.get("*", (req, res) => {
 	res.sendFile(path.join(__dirname, "frontend", "dist", "index.html")); //this means go inside frontend inside dist and than execute index.html
 });

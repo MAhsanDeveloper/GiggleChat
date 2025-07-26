@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useConversation from "../zustand/useConversation";
@@ -7,7 +9,11 @@ const useGetMessages = () => {
   const { messages, setMessages, selectedConversation } = useConversation();
 
   useEffect(() => {
-    if (!selectedConversation?._id) return;
+    if (!selectedConversation?._id) {
+      // Clear messages when no conversation is selected
+      setMessages([])
+      return
+    };
 
     // Always parse and check if it's an array
     let storedMessages;
@@ -18,6 +24,7 @@ const useGetMessages = () => {
     } catch {
       storedMessages = [];
     }
+
     if (Array.isArray(storedMessages)) {
       setMessages(storedMessages);
     } else {

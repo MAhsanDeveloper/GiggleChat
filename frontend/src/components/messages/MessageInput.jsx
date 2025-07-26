@@ -1,38 +1,89 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client"
+
+import { useState, useRef, useEffect } from "react";
 import { BsSend } from "react-icons/bs";
 import useSendMessage from "../../hooks/useSendMessage";
 
-const MessageInput = () => {
+const MessageInput = ({isMobile}) => {
   const [message, setMessage] = useState("");
   const { loading, sendMessage } = useSendMessage();
+  const inputRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!message) return;
-    await sendMessage(message);
-    setMessage("");
+    if (!message.trim()) return
+
+    const messageToSend = message.trim()
+    setMessage("") 
+    await sendMessage(messageToSend)
   };
 
+    useEffect(() => {
+    if (isMobile) {
+      const handleResize = () => {
+        // Small delay to ensure keyboard is fully shown
+        setTimeout(() => {
+          if (inputRef.current && document.activeElement === inputRef.current) {
+            inputRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            })
+          }
+        }, 100)
+      }
+
+      const handleFocus = () => {
+        setTimeout(() => {
+          if (inputRef.current) {
+            inputRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            })
+          }
+        }, 300)
+      }
+
+      window.addEventListener("resize", handleResize)
+      inputRef.current?.addEventListener("focus", handleFocus)
+
+      return () => {
+        window.removeEventListener("resize", handleResize)
+        inputRef.current?.removeEventListener("focus", handleFocus)
+      }
+    }
+  }, [isMobile])
+
   return (
-    <form className="w-full" onSubmit={handleSubmit}>
-      <div className="w-full relative">
+    <form className="px-4 my-3" onSubmit={handleSubmit}>
+     <div className="w-full relative">
         <input
+          ref={inputRef}
           id="chat-input"
           type="text"
-          className="border text-sm rounded-lg block w-full p-3 outline-none text-black caret-black bg-white placeholder-gray-500"
+          inputMode="text"
+          autoComplete="off"
+          className={`border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 text-white pr-12 ${
+            isMobile ? "text-base" : ""
+          }`}
           placeholder="Send a message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          style={
+            isMobile
+              ? {
+                  fontSize: "16px", // Prevents zoom on iOS
+                  minHeight: "44px", // Better touch target
+                }
+              : {}
+          }
         />
         <button
           type="submit"
-          className=" absolute inset-y-0 end-0 flex items-center pe-3"
+          className="absolute inset-y-0 end-0 flex items-center pe-3 text-white hover:text-blue-400 transition-colors"
+          disabled={loading || !message.trim()}
         >
-          {loading ? (
-            <div className="loading loading-spinner text-blue-500"></div>
-          ) : (
-            <BsSend className="text-black" />
-          )}
+          {loading ? <div className="loading loading-spinner w-5 h-5"></div> : <BsSend className="w-5 h-5" />}
         </button>
       </div>
     </form>

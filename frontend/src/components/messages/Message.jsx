@@ -33,7 +33,7 @@ const Message = ({ message }) => {
       {fromMe && selectedConversation && (
   <>
     {Array.isArray(message.readBy) &&
-    message.readBy.map(String).includes(selectedConversation._id.toString()) ? (
+    message.readBy?.map(String).includes(selectedConversation._id.toString()) ? (
       <span className="text-blue-500 tracking-tighter">✔✔</span>
     ) : Array.isArray(message.deliveredTo) &&
       message.deliveredTo.map(String).includes(selectedConversation._id.toString()) ? (
