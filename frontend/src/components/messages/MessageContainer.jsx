@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import useConversation from "../../zustand/useConversation";
 import { TiMessages } from "react-icons/ti";
@@ -15,10 +17,8 @@ const MessageContainer = ({ isMobile }) => {
 
   return (
     <div className="flex flex-col h-screen w-full min-h-0 bg-gradient-to-br from-gray-900/80 to-blue-900/60 backdrop-blur-lg text-white relative">
-      {!selectedConversation ? (
-        <NoChatSelected />
-      ) : (
-        <>
+    
+      
           <div
             className={
               isMobile
@@ -51,7 +51,7 @@ const MessageContainer = ({ isMobile }) => {
               </button>
             )}
             <img
-              src={selectedConversation.profilePic}
+              src={selectedConversation.profilePic || "/placeholder.svg"}
               alt={selectedConversation.fullName}
               className={`w-11 h-11 rounded-full border-2 border-blue-400 shadow ${
                 isMobile ? "ml-14" : ""
@@ -83,15 +83,26 @@ const MessageContainer = ({ isMobile }) => {
                 <div className="text-center p-4"></div>
               }
             >
-              <div
-                className="bg-slate-800/90 p-2 pt-3 border-t border-slate-700 mb-2"
-              >
-                <MessageInput />
-              </div>
+             <div
+            className={`bg-slate-800/90 p-2 pt-3 border-t border-slate-700 ${
+              isMobile ? "pb-safe-area-inset-bottom" : "mb-2"
+            }`}
+            style={
+              isMobile
+                ? {
+                    paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))",
+                    position: "sticky",
+                    bottom: 0,
+                    zIndex: 10,
+                  }
+                : {}
+            }
+          >
+            <MessageInput isMobile={isMobile} />
+          </div>
             </React.Suspense>
           </div>
-        </>
-      )}
+      
     </div>
   );
 };

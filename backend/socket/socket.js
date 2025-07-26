@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
 
   const userId = socket.handshake.query.userId;
-  if (userId != "undefined") userSocketMap[userId] = socket.id;
+  if (userId && userId != "undefined") userSocketMap[userId] = socket.id;
 
   // io.emit() is used to send events to all the connected clients
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
@@ -35,21 +35,24 @@ io.on("connection", (socket) => {
   // socket.on() is used to listen to the events. can be used both on client and server side
   socket.on("disconnect", () => {
     console.log("user disconnected", socket.id);
-    delete userSocketMap[userId];
-    io.emit("getOnlineUsers", Object.keys(userSocketMap));
+     if (userId && userId !== "undefined") {
+      delete userSocketMap[userId]
+      io.emit("getOnlineUsers", Object.keys(userSocketMap))
+    }
   });
 
   socket.on("message-delivered", async ({ messageId, receiverId }) => {
     try {
-      await Message.findByIdAndUpdate(messageId, {
-        $addToSet: { deliveredTo: receiverId }, // Avoid duplicates
-      });
+      const updatedMessage = await Message.findByIdAndUpdate(
+        messageId,
+        { $addToSet: { deliveredTo: receiverId } },
+        { new: true },
+      )
 
-      // Notify sender that it was delivered
-      // Find the message to get senderId
-      const message = await Message.findById(messageId);
-      if (message) {
-        const senderSocketId = userSocketMap[message.senderId.toString()];
+      if (updatedMessage) {
+        // Notify sender that it was delivered
+        // Find the message to get senderId
+        const senderSocketId = userSocketMap[updatedMessage.senderId.toString()];
         if (senderSocketId) {
           io.to(senderSocketId).emit("message-delivered", {
             messageId,
@@ -63,14 +66,29 @@ io.on("connection", (socket) => {
   });
   socket.on("message-read", async ({ messageId, userId }) => {
     try {
-      await Message.findByIdAndUpdate(messageId, {
-        $addToSet: { readBy: userId }, // Avoid duplicates
-      });
-
-      io.emit("message-read", {
+       const updatedMessage = await Message.findByIdAndUpdate(
         messageId,
-        userId,
-      });
+        { $addToSet: { readBy: userId } },
+        { new: true },
+      );
+
+      if (updatedMessage) {
+        // Notify both participants about read status
+        const senderSocketId = userSocketMap[updatedMessage.senderId.toString()]
+           const receiverSocketId = userSocketMap[updatedMessage.receiverId.toString()]
+
+        const readEvent = {
+          messageId,
+          userId,
+        }
+
+        if (senderSocketId) {
+          io.to(senderSocketId).emit("message-read", readEvent)
+        }
+        if (receiverSocketId && receiverSocketId !== senderSocketId) {
+          io.to(receiverSocketId).emit("message-read", readEvent)
+        }
+      }
     } catch (error) {
       console.error("Error updating message-read:", error.message);
     }

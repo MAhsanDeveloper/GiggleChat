@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import useGetConversations from "../../hooks/useGetConversations";
-import { getRandomEmoji } from "../../utils/emojis";
 
 const Conversation = React.lazy(() => import("./Conversation"));
 
@@ -13,7 +12,6 @@ const Conversations = () => {
 				<Conversation
 					key={conversation._id}
 					conversation={conversation}
-					emoji={getRandomEmoji()}
 					lastIdx={idx === conversations.length - 1}
 				/>
 			))}

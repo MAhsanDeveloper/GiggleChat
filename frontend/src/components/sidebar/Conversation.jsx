@@ -1,12 +1,17 @@
+"use client";
+
 import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../zustand/useConversation";
+import useUnreadMessages from "../../hooks/useUnreadMessages";
 
-const Conversation = ({ conversation, lastIdx, emoji }) => {
+const Conversation = ({ conversation, lastIdx}) => {
 	const { selectedConversation, setSelectedConversation } = useConversation();
 
 	const isSelected = selectedConversation?._id === conversation._id;
 	const { onlineUsers } = useSocketContext();
 	const isOnline = onlineUsers.includes(conversation._id);
+	   const unreadCounts = useUnreadMessages((state) => state.unreadCounts)
+  const unreadCount = unreadCounts[conversation._id] || 0
 
 	return (
 		<>
@@ -25,7 +30,7 @@ const Conversation = ({ conversation, lastIdx, emoji }) => {
 				<div className='flex flex-col flex-1'>
 					<div className='flex gap-3 justify-between'>
 						<p className='font-bold text-gray-200'>{conversation.fullName}</p>
-						<span className='text-xl'>{emoji}</span>
+						  {unreadCount > 0 && <div className="unread-badge">{unreadCount > 99 ? "99+" : unreadCount}</div>}
 					</div>
 				</div>
 			</div>
