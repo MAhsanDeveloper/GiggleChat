@@ -1,6 +1,4 @@
-public/* linguist-vendored
-static/* linguist-vendored
-dist/* linguist-vendored
+*.html linguist-vendored
 build/* linguist-vendored
-stats.html linguist-vendored
-index.html linguist-vendored
+public/* linguist-vendored
+dist/* linguist-vendored
