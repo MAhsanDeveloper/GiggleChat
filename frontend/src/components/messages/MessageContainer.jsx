@@ -16,19 +16,19 @@ const MessageContainer = ({ isMobile }) => {
   }
 
   return (
-    <div className="flex flex-col h-screen w-full min-h-0 bg-gradient-to-br from-gray-900/80 to-blue-900/60 backdrop-blur-lg text-white relative">
+    <div className="flex flex-col h-screen w-full min-h-0  bg-base-200 border-r border-base-300 text-base-content relative">
       <div
         className={
           isMobile
-            ? "flex items-center justify-center gap-3 bg-slate-800/90 px-2 py-2 border-b border-slate-700 shadow-sm sticky top-0 z-10"
-            : "flex items-center gap-3 bg-slate-800/90 px-6 py-2 border-b border-slate-700 shadow-sm sticky top-0 z-10"
+            ? "flex items-center justify-center gap-3  px-2 py-2  border-r border-base-300 text-base-content shadow-sm sticky top-0 z-10"
+            : "flex items-center gap-3 px-6 py-2 border-r border-base-300 text-base-content shadow-sm sticky top-0 z-10"
         }
         style={isMobile ? { position: "relative" } : {}}
       >
         {isMobile && (
           <button
             onClick={() => setSelectedConversation(null)}
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-3 py-1.5 rounded-full shadow-lg transition text-base absolute left-2 top-1/2 -translate-y-1/2 z-30"
+            className="flex items-center gap-2 border-r border-base-300 text-base-content hover:bg-base-100 px-3 py-1.5 rounded-full shadow-lg transition text-base absolute left-2 top-1/2 -translate-y-1/2 z-30"
             style={{ height: "2.5rem" }}
           >
             <svg
@@ -51,21 +51,21 @@ const MessageContainer = ({ isMobile }) => {
         <img
           src={selectedConversation.profilePic || "/placeholder.svg"}
           alt={selectedConversation.fullName}
-          className={`w-11 h-11 rounded-full border-2 border-blue-400 shadow ${
+          className={`w-11 h-11 rounded-full border-r border-base-300 shadow ${
             isMobile ? "ml-14" : ""
           }`}
         />
         <div className={isMobile ? "flex flex-col items-start" : ""}>
-          <div className="font-semibold text-lg text-white">
+          <div className="font-semibold text-lg text-base-content">
             {selectedConversation.fullName}
           </div>
-          <div className="text-xs text-gray-300">
+          <div className="text-xs text-base-content">
             {selectedConversation.username}
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 min-h-0 bg-gradient-to-t from-slate-900/60 to-transparent overflow-hidden">
+      <div className="flex flex-col flex-1 min-h-0 border-r border-base-300 overflow-hidden">
         <React.Suspense
           fallback={<div className="text-center p-4">Loading messages...</div>}
         >
@@ -75,7 +75,7 @@ const MessageContainer = ({ isMobile }) => {
         </React.Suspense>
 
         <div
-          className={`bg-slate-800/90 p-2 pt-3 border-t border-slate-700 ${
+          className={`bg-base-100 p-2 pt-3 border-r border-base-300 ${
             isMobile ? "pb-safe-area-inset-bottom" : "mb-2"
           }`}
           style={
@@ -101,9 +101,9 @@ export default MessageContainer;
 const NoChatSelected = () => {
   const { authUser } = useAuthContext();
   return (
-    <div className="flex items-center justify-center bg-gradient-to-br from-gray-900/80 to-blue-900/60 backdrop-blur-lg text-white w-full h-full">
-      <div className="px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2">
-        <p>Welcome 👋 {authUser.fullName} ❄</p>
+    <div className="flex items-center justify-center border-r border-base-300 text-base-content w-full h-full">
+      <div className="px-4 text-center sm:text-lg md:text-xl text-base-content font-semibold flex flex-col items-center gap-2">
+        <p>Welcome {authUser.fullName} </p>
         <p>Select a chat to start messaging</p>
         <TiMessages className="text-3xl md:text-6xl text-center" />
       </div>

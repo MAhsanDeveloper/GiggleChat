@@ -25,7 +25,7 @@ const Signup = () => {
 
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-cover bg-center">
+    <div className="flex items-center justify-center min-h-screen bg-cover bg-center bg-gradient-to-t from-slate-900/60 to-transparent overflow-hidden">
       {/* Glassmorphic Container */}
       <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-lg shadow-lg p-6 w-full max-w-sm">
         <h1 className="text-xl font-semibold text-center text-gray-200">

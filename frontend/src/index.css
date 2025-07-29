@@ -8,7 +8,7 @@ body,
   height: 100%;
 }
 
-body {
+.theme-bg {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("/bg-img.webp");
   background-size: cover;
@@ -29,7 +29,7 @@ body {
   input,
   textarea {
     font-size: 16px;
-    caret-color: white;
+    caret-color: bg-base-100;
   }
 }
 
@@ -58,7 +58,7 @@ body {
 /* Custom Scrollbar for Glassmorphism Effect */
 .scrollbar {
   scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: white transparent; /* Subtle thumb color with transparent track */
+  scrollbar-color: base-200 transparent; /* Subtle thumb color with transparent track */
 }
 
 .scrollbar::-webkit-scrollbar {
@@ -100,22 +100,22 @@ body {
 /* Custom Scrollbar for Sidebar and Conversations */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #334155 #1e293b; /* thumb color, track color */
+  scrollbar-color: base-300 base-200; /* thumb color, track color */
 }
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
-  background: #1e293b;
+  background: base-200;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: base-300;
   border-radius: 6px;
-  border: 2px solid #1e293b;
+  border: 2px solid base-200 border-r;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: base-200;
 }
 
 /* Messages scrollbar */
@@ -124,22 +124,22 @@ body {
 }
 
 .messages-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: base-200(0, 0, 0, 0.1);
 }
 
 .messages-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
+  background: base-200(255, 255, 255, 0.3);
   border-radius: 3px;
 }
 
 .messages-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: base-200(255, 255, 255, 0.5);
 }
 
 /* Unread message badge */
 .unread-badge {
-  background: #ef4444;
-  color: white;
+  background: base-300;
+  color: base-100;
   border-radius: 50%;
   min-width: 20px;
   height: 20px;

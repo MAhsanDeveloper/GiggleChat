@@ -63,7 +63,7 @@ const MessageInput = ({isMobile}) => {
           type="text"
           inputMode="text"
           autoComplete="off"
-          className={`border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 text-white pr-12 ${
+          className={`border text-sm rounded-lg block w-full p-2.5 bg-base-200 border-r text-base-content pr-12 ${
             isMobile ? "text-base" : ""
           }`}
           placeholder="Send a message"
@@ -80,7 +80,7 @@ const MessageInput = ({isMobile}) => {
         />
         <button
           type="submit"
-          className="absolute inset-y-0 end-0 flex items-center pe-3 text-white hover:text-blue-400 transition-colors"
+          className="absolute inset-y-0 end-0 flex items-center pe-3 text-base-content hover:text-base-100 transition-colors"
           disabled={loading || !message.trim()}
         >
           {loading ? <div className="loading loading-spinner w-5 h-5"></div> : <BsSend className="w-5 h-5" />}

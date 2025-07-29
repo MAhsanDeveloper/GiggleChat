@@ -16,8 +16,8 @@ const Conversation = ({ conversation, lastIdx }) => {
   return (
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
-				${isSelected ? "bg-sky-500" : ""}
+        className={`flex gap-2 items-center hover:bg-base-100 rounded p-2 py-1 cursor-pointer
+				${isSelected ? "bg-base-300" : ""}
 			`}
         onClick={() => setSelectedConversation(conversation)}
       >
@@ -33,7 +33,7 @@ const Conversation = ({ conversation, lastIdx }) => {
 
         <div className="flex flex-col flex-1">
           <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-200">{conversation.fullName}</p>
+            <p className="font-bold text-base-content">{conversation.fullName}</p>
             {unreadCount > 0 && (
               <div className="unread-badge">
                 {unreadCount > 99 ? "99+" : unreadCount}

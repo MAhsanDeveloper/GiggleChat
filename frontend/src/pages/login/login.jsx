@@ -14,7 +14,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-cover bg-center px-2 mx-2.5">
+    <div className="flex items-center justify-center h-screen bg-cover bg-center px-2 mx-2.5 bg-gradient-to-t from-slate-900/60 to-transparent overflow-hidden">
       {/* Glassmorphic Container */}
       <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md p-4 sm:p-6">
         <h1 className="text-2xl sm:text-3xl font-semibold text-center text-gray-200">
