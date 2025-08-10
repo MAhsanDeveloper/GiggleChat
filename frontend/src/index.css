@@ -6,6 +6,13 @@ html,
 body,
 #root {
   height: 100%;
+    min-height: 100dvh; /* dynamic viewport height */
+}
+
+@supports (height: 100dvh) {
+  .full-height {
+    height: 100dvh;
+  }
 }
 
 .theme-bg {
@@ -138,8 +145,8 @@ body,
 
 /* Unread message badge */
 .unread-badge {
-  background: base-300;
-  color: base-100;
+  background: hsl(var(--p));
+  color: hsl(var(--pc));
   border-radius: 50%;
   min-width: 20px;
   height: 20px;
@@ -148,4 +155,11 @@ body,
   justify-content: center;
   font-size: 12px;
   font-weight: bold;
+   animation: badge-bounce 0.6s ease-in-out;
 }
+
+@keyframes badge-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+

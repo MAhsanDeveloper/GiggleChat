@@ -16,7 +16,7 @@ const MessageContainer = ({ isMobile }) => {
   }
 
   return (
-    <div className="flex flex-col h-screen w-full min-h-0  bg-base-200 border-r border-base-300 text-base-content relative">
+    <div className="flex flex-col full-height w-full min-h-0  bg-base-200 border-r border-base-300 text-base-content relative">
       <div
         className={
           isMobile
