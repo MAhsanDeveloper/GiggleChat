@@ -1,26 +1,22 @@
-import { create } from "zustand";
+import { create } from "zustand"
 
-const initialConversation =
-  JSON.parse(localStorage.getItem("selectedConversation")) || null;
+const initialConversation = JSON.parse(localStorage.getItem("selectedConversation")) || null
 
 const useConversation = create((set) => ({
   selectedConversation: initialConversation,
   setSelectedConversation: (selectedConversation) => {
     if (selectedConversation) {
-      localStorage.setItem(
-        "selectedConversation",
-        JSON.stringify(selectedConversation)
-      );
+      localStorage.setItem("selectedConversation", JSON.stringify(selectedConversation))
     } else {
-      localStorage.removeItem("selectedConversation");
+      localStorage.removeItem("selectedConversation")
     }
-    set({ selectedConversation });
+    set({ selectedConversation, messages: [] })
   },
   messages: [],
-  setMessages: (messages) =>
-    set({
-      messages: Array.isArray(messages) ? messages : [],
-    }),
-}));
+  setMessages: (messages) => {
+    const safeMessages = Array.isArray(messages) ? messages : []
+    set({ messages: safeMessages })
+  },
+}))
 
-export default useConversation;
+export default useConversation
