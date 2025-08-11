@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, Suspense, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import useGetMessages from "../../hooks/useGetMessages";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 import useListenMessages from "../../hooks/useListenMessages";
 import useConversation from "../../zustand/useConversation";
 import useUnreadMessages from "../../hooks/useUnreadMessages";
-
-const Message = React.lazy(() => import("./Message"));
+import Message from "./Message";
 
 const Messages = () => {
   const { messages = [], loading } = useGetMessages();
@@ -65,29 +64,28 @@ const Messages = () => {
     }
   }, [scrollToBottom])
 
-  return (
-    <div
-      ref={messagesWrapperRef}
-      className="px-4 flex-1 overflow-auto messages-scrollbar"
-    >
-      {!loading ? (
-        <Suspense fallback={null}>
-          {messages.map((message) => (
-            <Message key={message._id} message={message} />
-          ))}
-        </Suspense>
-      ) : (
-        [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)
-      )}
+return (
+  <div
+    ref={messagesWrapperRef}
+    className="px-4 flex-1 overflow-auto messages-scrollbar"
+  >
+    {!loading ? (
+      messages?.map((message) => (
+        <Message key={message._id} message={message} />
+      ))
+    ) : (
+      [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)
+    )}
 
-      {!loading && messages.length === 0 && (
-        <p className="text-center">Send a message to start the conversation</p>
-      )}
+    {!loading && messages.length === 0 && (
+      <p className="text-center">Send a message to start the conversation</p>
+    )}
 
-      {/* Dummy ref for scrolling */}
-      <div ref={lastMessageRef} />
-    </div>
-  );
-};
+    {/* Dummy ref for scrolling */}
+    <div ref={lastMessageRef} />
+  </div>
+);
+
+}
 
 export default Messages;
